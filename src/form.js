@@ -41,15 +41,15 @@ class Form extends React.Component {
 
     fetchData = () => {
     if(this.state.filtered === 'author') {
-      fetch(`https://hn.algolia.com/api/v1/search?query=author_${this.state.input}`)
+      fetch(`http://hn.algolia.com/api/v1/search?tags=author_${ this.state.input}&tags=story`)
       .then((res) => res.json())
       .then(json => this.setState({posts: json.hits}))
     } else if(this.state.filtered === 'date') {
-      fetch(`https://hn.algolia.com/api/v1/search_by_date?query=${this.state.input}`)
+      fetch(`http://hn.algolia.com/api/v1/search_by_date?query=${ this.state.input }&tags=story`)
       .then((res) => res.json())
       .then(json => this.setState({posts: json.hits}))
     } else {
-      fetch(`http://hn.algolia.com/api/v1/search?query=${this.state.input}`)
+      fetch(`http://hn.algolia.com/api/v1/search?query=${this.state.input}&tags=story`)
       .then((res) => res.json())
       .then(json => this.setState({posts: json.hits}))
     }
@@ -59,9 +59,9 @@ class Form extends React.Component {
     return (
       <div className='main'>
         <form className='form'>
-          <input className='search' placeholder='Enter Keyword' onChange={event => this.handleChange(event)}></input>
+          <input className='search' placeholder='Enter Keyword' onChange={this.handleChange}></input>
 
-          <select className='filt' value={this.state.value} onChange={event => this.handleSelect(event)}>
+          <select className='filt' value={this.state.value} onChange={this.handleSelect}>
             <option value="empty">-</option>
             <option value="author">Author</option>
             <option value="date">Date</option>
